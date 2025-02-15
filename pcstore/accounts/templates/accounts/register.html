@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  
+  {% load static %}
+  {% load crispy_forms_tags %}
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <!-- Importing tailwindcss -->
+  <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+</head>
+<body>
+
+    <a href="/" class="absolute py-2 px-8 top-6 left-6 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-500">Back</a>
+
+  <form method="post">
+    {% csrf_token %}
+      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h1 class="mt-10 text-center text-5xl font-bold tracking-tight text-indigo-600">TechForge</h1>
+            <h2 class="mt-4 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+        </div>
+      
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form class="space-y-6" action="#" method="POST">
+            <div>
+              <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
+              <div class="mt-2">
+                <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+              </div>
+            </div>
+
+            <div class="my-4">
+                <div class="flex items-center justify-between">
+                  <label for="username" class="block text-sm/6 font-medium text-gray-900">Username</label>
+                </div>
+                <div class="mt-2">
+                  <input type="text" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+      
+            <div class="my-4">
+              <div class="flex items-center justify-between">
+                <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
+              </div>
+              <div class="mt-2">
+                <input type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+              </div>
+            </div>
+
+            <div class="my-4">
+              <div class="flex items-center justify-between">
+                <label for="password" class="block text-sm/6 font-medium text-gray-900">Repeat the password</label>
+              </div>
+              <div class="mt-2">
+                <input type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+              </div>
+            </div>
+      
+            <div>
+              <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign up</button>
+            </div>
+          </form>
+      
+          <p class="mt-10 text-center text-sm/6 text-gray-500">
+            Don you have an account?
+            <a href="/login" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign In</a>
+          </p>
+        </div>
+      </div>
+</form>
+
+</body>
+</html>
