@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-12 bg-gray-100 font-sans">
+    <div class="container mx-auto px-4">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        {% for image in product.images.all %}
+                            <img src="{{ image.image.url }}" alt="{{ product.name }}" class="w-full h-70 object-cover">
+                        {% empty %}
+                            <img src="{% static 'images/product_placeholder.png' %}" alt="{{ product.name }}" class="w-full h-70 object-cover">
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h1 class="text-3xl font-bold">{{ product.name }}</h1>
+                    <p class="mt-4 text-gray-600">{{ product.description }}</p>
+                    <p class="mt-4 text-gray-800 font-bold">{{ product.price }} KZT</p>
+                    <p class="mt-4 text-gray-800 font-bold">Категория: {{ product.category.name }}</p>
+
+                    <div class="mt-4">
+                        <h3 class="text-xl font-bold">Характеристики:</h3>
+                        <ul class="mt-2">
+                            {% for key, value in product.specifications.items %}
+                                <li class="mt-2">
+                                    <span class="font-bold">{{ key }}:</span>
+                                    {% if value is iterable and value is not string %}
+                                        <ul class="ml-4">
+                                            {% for item in value %}
+                                                <li>{{ item }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        {{ value }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="mt-6">
+                        <button onclick="addToCart({{ product.id }})" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">Добавить в корзину</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+function addToCart(productId) {
+    fetch(`/orders/add-to-cart/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Товар добавлен в корзину!');
+        } else {
+            alert('Failed to add product to cart: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while adding the product to the cart.');
+    });
+}
+</script>
+{% endblock %}

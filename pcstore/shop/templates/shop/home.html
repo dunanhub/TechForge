@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-center bg-cover h-screen" style="background-image: url('https://img.freepik.com/premium-vector/abstract-light-out-technology-with-neon-triangles-hitech-communication-concept-innovation-background-vector-design_116849-220.jpg');">
+    <div class="relative flex items-center justify-center h-full">
+        <div class="text-center text-white">
+            <h1 class="text-5xl font-bold">Добро пожаловать в TechForge</h1>
+            <p class="mt-4 text-lg">Откройте для себя лучшие технические продукты и аксессуары здесь.</p>
+            <a href="/products/list" class="mt-6 inline-block bg-blue-500 text-white px-6 py-3 rounded-md">Перейти к покупкам</a>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Products Section -->
+<section class="py-12 bg-gray-100 font-sans">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Popular Products</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Example Product Card -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="https://starlinecomp.kz/thumb/2/_Q8UMshYcT6Kd7usNPRB_g/r/d/h7326.png" alt="Product 1" class="w-full h-auto object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold">ASUS ROG Strix GeForce RTX 4090</h3>
+                    <p class="mt-2 text-gray-600"> мощная видеокарта для геймеров и профессионалов. Наслаждайтесь невероятной графикой и высокой производительностью в самых требовательных играх и приложениях.</p>
+                    <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md">Learn More</a>
+                </div>
+            </div>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="https://idpkz.kz/upload/images/72616_857709_16.jpg" alt="Product 2" class="w-full h-auto object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold">Intel Core i9 </h3>
+                    <p class="mt-2 text-gray-600">флагманский процессор для энтузиастов. Отличный выбор для стримеров, разработчиков и всех, кто требует максимальной мощности от своего ПК</p>
+                    <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md">Learn More</a>
+                </div>
+            </div>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="https://nout.kz/upload/resize_cache/webp/iblock/01b/rerb1yrn5q1za9mll672i7putskhz9py/3333.webp" alt="Product 3" class="w-full h-auto object-cover">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold">AMD Ryzen 9</h3>
+                    <p class="mt-2 text-gray-600">производительный процессор для работы и развлечений. Идеально подходит для редактирования видео и игр.</p>
+                    <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-white font-sans">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Что говорят наши клиенты</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                <p class="italic">"Great products and excellent customer service! Highly recommend TechForge."</p>
+                <p class="mt-4 text-sm font-bold">- John Doe</p>
+            </div>
+            <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                <p class="italic">"I love the variety of tech products available. Always find what I need."</p>
+                <p class="mt-4 text-sm font-bold">- Jane Smith</p>
+            </div>
+            <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                <p class="italic">"Fast shipping and great prices. TechForge is my go-to tech store."</p>
+                <p class="mt-4 text-sm font-bold">- Robert Brown</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Subscription Section -->
+<section class="py-12 bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Будьте в курсе событий</h2>
+        <p class="mb-4">Подпишитесь на нашу рассылку, чтобы получать последние новости и эксклюзивные предложения.</p>
+        <form class="flex flex-col md:flex-row justify-center items-center">
+            <input type="email" placeholder="Введите свой адрес электронной почты" class="w-80 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4 md:mb-0 md:mr-4">
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md">Потвердить</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="bg-gray-800 py-6">
+    <div class="container mx-auto px-4 text-center text-white">
+        <p>&copy; 2025 TechForge. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock %}
