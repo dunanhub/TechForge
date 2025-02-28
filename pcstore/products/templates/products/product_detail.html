@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<section class="py-12 bg-gray-100 font-sans">
+<section class="py-12 font-sans">
     <div class="container mx-auto px-4">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -42,7 +42,8 @@
                     </div>
 
                     <div class="mt-6">
-                        <button onclick="addToCart({{ product.id }})" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">Добавить в корзину</button>
+                        <button onclick="addToCart({{ product.id }})" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-800">Добавить в корзину</button>
+                        <button class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-800"><a href="/orders/view-cart" >Перейти в корзину</a></button>
                     </div>
                 </div>
             </div>

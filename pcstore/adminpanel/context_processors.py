@@ -8,7 +8,7 @@ def breadcrumbs(request):
 
     for part in path_parts:
         url_accum += f'/{part}'
-        name = part.replace('-', ' ').capitalize()  # Преобразуем URL в читаемый формат
+        name = part.replace('-', ' ').capitalize()
         breadcrumbs.append({'name': name, 'url': url_accum})
 
     return {'breadcrumbs': breadcrumbs}
