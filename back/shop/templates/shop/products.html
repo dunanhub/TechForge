@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechForge - Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .group input[type="checkbox"]:checked + svg path:first-of-type {
+            opacity: 1;
+        }
+        .group svg path {
+            transition: opacity 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <header class="absolute inset-x-0 top-0 z-50">
+        <nav class="flex items-center justify-between p-6 content-between content-between lg:px-8" aria-label="Global">
+            <div class="flex lg:flex-1">
+                <a href="/" class="-m-1.5 p-1.5">
+                    <span class="text-blue-500 font-bold text-2xl">TechForge</span>
+                </a>
+            </div>
+            <div class="flex lg:hidden">
+                <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+            <div class="hidden lg:flex lg:gap-x-12">
+                <a href="/" class="text-sm/6 font-semibold text-gray-900">Home</a>
+                <a href="/products/" class="text-sm/6 font-semibold text-gray-900">Products</a>
+                <a href="/categories/" class="text-sm/6 font-semibold text-gray-900">Categories</a>
+                <a href="/#contact" class="text-sm/6 font-semibold text-gray-900">Contact</a>
+            </div>
+            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <a href="/admin/" class="text-sm/6 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Admin Panel</a>
+                    {% endif %}
+                    <a href="#" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                            <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
+                        </svg>                                              
+                    </a>
+                    <a href="/profile/" class="flex text-sm/6 px-4 py-2 font-semibold text-gray-900 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                        <span class="underline underline-offset-4">{{ user.username }}</span>
+                    </a>
+                    <a href="/logout/" class="text-sm/6 px-4 py-2 font-semibold text-gray-900">Log Out</a>
+                {% else %}
+                    <a href="/login/" class="text-sm/6 px-4 py-2 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+                {% endif %}
+            </div>
+        </nav>
+        <!-- Mobile menu, show/hide based on menu open state. -->
+        <div class="lg:hidden" role="dialog" aria-modal="true">
+            <!-- Background backdrop, show/hide based on slide-over state. -->
+            <div class="fixed inset-0 z-50"></div>
+            <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                <div class="flex items-center justify-between">
+                    <a href="#" class="-m-1.5 p-1.5">
+                        <span class="text-blue-500 font-bold text-2xl">TechForge</span>
+                    </a>
+                    <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                        <span class="sr-only">Close menu</span>
+                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="mt-6 flow-root">
+                    <div class="-my-6 divide-y divide-gray-500/10">
+                        <div class="space-y-2 py-6">
+                            <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Home</a>
+                            <a href="/products/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Products</a>
+                            <a href="/categories/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Categories</a>
+                            <a href="/#contact" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Contact</a>
+                        </div>
+                        <div class="py-6">
+                            {% if user.is_authenticated %}
+                                {% if user.is_superuser %}
+                                    <a href="/admin/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Admin Panel</a>
+                                {% endif %}
+                                <a href="/profile/" class="flex -mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
+                                    <span class="underline underline-offset-4">{{ user.username }}</span>
+                                </a>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                        <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
+                                    </svg>                                              
+                                </a>
+                                <a href="/logout/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log Out</a>
+                            {% else %}
+                                <a href="/login/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="bg-white">
+        <div>
+          <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
+              <h1 class="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+      
+              <div class="flex items-center">
+                <div class="relative inline-block text-left">
+                  <div>
+                    <button type="button" class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="menu-button" aria-expanded="false" aria-haspopup="true">
+                      Sort
+                      <svg class="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+      
+                  <!--
+                    Dropdown menu, show/hide based on menu state.
+      
+                    Entering: "transition ease-out duration-100"
+                      From: "transform opacity-0 scale-95"
+                      To: "transform opacity-100 scale-100"
+                    Leaving: "transition ease-in duration-75"
+                      From: "transform opacity-100 scale-100"
+                      To: "transform opacity-0 scale-95"
+                  -->
+                  <div class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white ring-1 shadow-2xl ring-black/5 focus:outline-hidden hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                      <!--
+                        Active: "bg-gray-100 outline-hidden", Not Active: ""
+      
+                        Selected: "font-medium text-gray-900", Not Selected: "text-gray-500"
+                      -->
+                      <a href="#" class="block px-4 py-2 text-sm font-medium text-gray-900  hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-0">Most Popular</a>
+                      <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-1">Best Rating</a>
+                      <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-2">Newest</a>
+                      <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-3">Price: Low to High</a>
+                      <a href="#" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-4">Price: High to Low</a>
+                    </div>
+                  </div>
+                </div>
+      
+                <button type="button" class="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+                  <span class="sr-only">View grid</span>
+                  <svg class="size-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
+                    <path fill-rule="evenodd" d="M4.25 2A2.25 2.25 0 0 0 2 4.25v2.5A2.25 2.25 0 0 0 4.25 9h2.5A2.25 2.25 0 0 0 9 6.75v-2.5A2.25 2.25 0 0 0 6.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 2 13.25v2.5A2.25 2.25 0 0 0 4.25 18h2.5A2.25 2.25 0 0 0 9 15.75v-2.5A2.25 2.25 0 0 0 6.75 11h-2.5Zm9-9A2.25 2.25 0 0 0 11 4.25v2.5A2.25 2.25 0 0 0 13.25 9h2.5A2.25 2.25 0 0 0 18 6.75v-2.5A2.25 2.25 0 0 0 15.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 11 13.25v2.5A2.25 2.25 0 0 0 13.25 18h2.5A2.25 2.25 0 0 0 18 15.75v-2.5A2.25 2.25 0 0 0 15.75 11h-2.5Z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <button type="button" class="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden">
+                  <span class="sr-only">Filters</span>
+                  <svg class="size-5" aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" data-slot="icon">
+                    <path fill-rule="evenodd" d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+      
+            <section aria-labelledby="products-heading" class="pt-6 pb-24">
+              <h2 id="products-heading" class="sr-only">Products</h2>
+      
+              <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                <!-- Filters -->
+                <form class="hidden lg:block">
+                    <h3 class="sr-only">Categories</h3>
+                    <ul role="list" class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
+                        <li>
+                            <a href="#" class="hover:text-slate-400">Computers & Laptops for Work & Gaming</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-slate-400">Must-Have Accessories for Your Devices</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-slate-400">High-Performance Gaming Gear</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-slate-400">Top-Quality Peripherals for Your Setup</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-slate-400">Reliable Supplies & Accessories</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-slate-400">IT Solutions for Business</a>
+                        </li>                   
+                    </ul>
+    
+                    <div class="border-b border-gray-200 px-4 py-6">
+                        <h3 class="-mx-2 -my-3 flow-root">
+                            <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
+                                <span class="font-medium text-gray-900">Color</span>
+                                <span class="ml-6 flex items-center">
+                                    <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style="display: block">
+                                        <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                                    </svg>
+                                    <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style="display: none">
+                                        <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            </button>
+                        </h3>
+                        <div class="pt-6" id="filter-section-0">
+                            <div class="space-y-4">                        
+                                <div class="flex gap-3">
+                                    <div class="flex h-5 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="filter-color-1" name="color[]" value="beige" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <label for="filter-color-1" class="text-sm text-gray-600">Beige</label>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex h-5 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            <input id="filter-color-1" name="color[]" value="beige" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                            <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <label for="filter-color-1" class="text-sm text-gray-600">Beige</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                
+                    <div class="border-t border-gray-200 px-4 py-6">
+                        <h3 class="-mx-2 -my-3 flow-root">
+                          <!-- Expand/collapse section button -->
+                          <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-0" aria-expanded="false">
+                            <span class="font-medium text-gray-900">Color</span>
+                            <span class="ml-6 flex items-center">
+                              <!-- Expand icon, show/hide based on section open state. -->
+                              <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style=" display: block">
+                                <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                              </svg>
+                              <!-- Collapse icon, show/hide based on section open state. -->
+                              <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style="display: none">
+                                <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
+                              </svg>
+                            </span>
+                          </button>
+                        </h3>
+                        <!-- Filter section, show/hide based on section state. -->
+                        <div class="pt-6" id="filter-section-mobile-0">
+                          <div class="space-y-6">
+                            <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                <div class="group grid size-4 grid-cols-1">
+                                  <input id="filter-mobile-color-0" name="color[]" value="white" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                  <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                    <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </div>
+                              </div>
+                              <label for="filter-mobile-color-0" class="min-w-0 flex-1 text-gray-500">White</label>
+                            </div>
+                            <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                <div class="group grid size-4 grid-cols-1">
+                                  <input id="filter-mobile-color-1" name="color[]" value="beige" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                  <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                    <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </div>
+                              </div>
+                              <label for="filter-mobile-color-1" class="min-w-0 flex-1 text-gray-500">Beige</label>
+                            </div>
+                            <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                <div class="group grid size-4 grid-cols-1">
+                                  <input id="filter-mobile-color-2" name="color[]" value="blue" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                  <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                    <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </div>
+                              </div>
+                              <label for="filter-mobile-color-2" class="min-w-0 flex-1 text-gray-500">Blue</label>
+                            </div>
+                            <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                <div class="group grid size-4 grid-cols-1">
+                                  <input id="filter-mobile-color-3" name="color[]" value="brown" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                  <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                    <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </div>
+                              </div>
+                              <label for="filter-mobile-color-3" class="min-w-0 flex-1 text-gray-500">Brown</label>
+                            </div>
+                            <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                <div class="group grid size-4 grid-cols-1">
+                                  <input id="filter-mobile-color-4" name="color[]" value="green" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                  <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                    <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </div>
+                              </div>
+                              <label for="filter-mobile-color-4" class="min-w-0 flex-1 text-gray-500">Green</label>
+                            </div>
+                            <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                <div class="group grid size-4 grid-cols-1">
+                                  <input id="filter-mobile-color-5" name="color[]" value="purple" type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                                  <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                                    <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                  </svg>
+                                </div>
+                              </div>
+                              <label for="filter-mobile-color-5" class="min-w-0 flex-1 text-gray-500">Purple</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </form>
+      
+                <!-- Product grid -->
+                <div class="lg:col-span-3">
+                  <!-- Your content -->
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+    </div>
+      
+
+   
+    <footer class="text-center py-6 bg-gray-800 text-white mt-10">
+        <p>&copy; 2025 TechForge. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const button = document.querySelector(".group.inline-flex");
+            const menu = button.closest(".relative").querySelector(".absolute");
+
+            if (!button || !menu) return;
+
+            menu.style.opacity = "0";
+            menu.style.transform = "scale(0.95)";
+            menu.style.transition = "opacity 0.3s ease-out, transform 0.3s ease-out";
+            menu.style.display = "none"; // Полностью скрываем
+
+            button.addEventListener("click", function () {
+                if (menu.style.display === "none") {
+                    menu.style.display = "block";
+                    setTimeout(() => {
+                        menu.style.opacity = "1";
+                        menu.style.transform = "scale(1)";
+                    }, 10);
+                } else {
+                    menu.style.opacity = "0";
+                    menu.style.transform = "scale(0.95)";
+                    setTimeout(() => {
+                        menu.style.display = "none";
+                    }, 300);
+                }
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!button.contains(event.target) && !menu.contains(event.target)) {
+                    menu.style.opacity = "0";
+                    menu.style.transform = "scale(0.95)";
+                    setTimeout(() => {
+                        menu.style.display = "none";
+                    }, 300);
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const button = document.querySelector(".flex.w-full.items-center"); // Кнопка "Color"
+            const section = document.querySelector("#filter-section-0"); // Блок фильтров
+            const icons = button.querySelectorAll("svg"); // Иконки +/- (разворачивания)
+
+            if (!button || !section) return;
+
+            // Начальные стили (скрываем)
+            section.style.opacity = "0";
+            section.style.maxHeight = "0";
+            section.style.overflow = "hidden";
+            section.style.transition = "opacity 0.3s ease-out, max-height 0.3s ease-out";
+
+            button.addEventListener("click", function () {
+                if (section.style.maxHeight === "0px") {
+                    section.style.maxHeight = section.scrollHeight + "px";
+                    section.style.opacity = "1";
+
+                    // Меняем иконки: скрываем плюс, показываем минус
+                    icons[0].style.display = "none";
+                    icons[1].style.display = "block";
+                } else {
+                    section.style.opacity = "0";
+                    section.style.maxHeight = "0";
+
+                    // Меняем иконки обратно
+                    icons[0].style.display = "block";
+                    icons[1].style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
