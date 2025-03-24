@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechForge - Home</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="text-gray-900">
+    <div class="bg-white">
+        <header class="absolute inset-x-0 top-0 z-50">
+            <nav class="flex items-center justify-between p-6 content-between content-between lg:px-8" aria-label="Global">
+                <div class="flex lg:flex-1">
+                    <a href="/" class="-m-1.5 p-1.5">
+                        <span class="text-blue-500 font-bold text-2xl">TechForge</span>
+                    </a>
+                </div>
+                <div class="flex lg:hidden">
+                    <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="hidden lg:flex lg:gap-x-12">
+                    <a href="/" class="text-sm/6 font-semibold text-gray-900">Home</a>
+                    <a href="/products/" class="text-sm/6 font-semibold text-gray-900">Products</a>
+                    <a href="/categories/" class="text-sm/6 font-semibold text-gray-900">Categories</a>
+                    <a href="/#contact" class="text-sm/6 font-semibold text-gray-900">Contact</a>
+                </div>
+                <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <a href="/admin/" class="text-sm/6 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Admin Panel</a>
+                        {% endif %}
+                        <a href="/profile/" class="flex text-sm/6 px-4 py-2 font-semibold text-gray-900 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                            <span class="underline underline-offset-4">{{ user.username }}</span>
+                        </a>
+                        <a href="/accounts/logout/" class="text-sm/6 px-4 py-2 font-semibold text-gray-900">Log Out</a>
+                    {% else %}
+                        <a href="#" class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                                <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
+                            </svg>                                              
+                        </a>
+                        <a href="/auth/login/" class="text-sm/6 px-4 py-2 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+                    {% endif %}
+                </div>
+            </nav>
+            <!-- Mobile menu, show/hide based on menu open state. -->
+            <div class="lg:hidden" role="dialog" aria-modal="true">
+                <!-- Background backdrop, show/hide based on slide-over state. -->
+                <div class="fixed inset-0 z-50"></div>
+                <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                    <div class="flex items-center justify-between">
+                        <a href="#" class="-m-1.5 p-1.5">
+                            <span class="text-blue-500 font-bold text-2xl">TechForge</span>
+                        </a>
+                        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                            <span class="sr-only">Close menu</span>
+                            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 flow-root">
+                        <div class="-my-6 divide-y divide-gray-500/10">
+                            <div class="space-y-2 py-6">
+                                <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Home</a>
+                                <a href="/products/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Products</a>
+                                <a href="/categories/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Categories</a>
+                                <a href="/#contact" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Contact</a>
+                            </div>
+                            <div class="py-6">
+                                {% if user.is_authenticated %}
+                                    {% if user.is_superuser %}
+                                        <a href="/admin/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Admin Panel</a>
+                                    {% endif %}
+                                    <a href="/profile/" class="flex -mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                        <span class="underline underline-offset-4">{{ user.username }}</span>
+                                    </a>
+                                    <a href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                            <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
+                                        </svg>                                              
+                                    </a>
+                                    <a href="/logout/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log Out</a>
+                                {% else %}
+                                    <a href="/login/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+    
+    <!-- Main content -->
+    {% block content %}
+    {% endblock %}
+    
+    <!-- Footer -->
+    <footer class="text-center py-6 bg-gray-800 text-white">
+        <p>&copy; 2025 TechForge. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const button = document.querySelector(".group.inline-flex");
+            const menu = button.closest(".relative").querySelector(".absolute");
+    
+            if (!button || !menu) return;
+    
+            menu.style.opacity = "0";
+            menu.style.transform = "scale(0.95)";
+            menu.style.transition = "opacity 0.3s ease-out, transform 0.3s ease-out";
+            menu.style.display = "none"; // Полностью скрываем
+    
+            button.addEventListener("click", function () {
+                if (menu.style.display === "none") {
+                    menu.style.display = "block";
+                    setTimeout(() => {
+                        menu.style.opacity = "1";
+                        menu.style.transform = "scale(1)";
+                    }, 10);
+                } else {
+                    menu.style.opacity = "0";
+                    menu.style.transform = "scale(0.95)";
+                    setTimeout(() => {
+                        menu.style.display = "none";
+                    }, 300);
+                }
+            });
+    
+            document.addEventListener("click", function (event) {
+                if (!button.contains(event.target) && !menu.contains(event.target)) {
+                    menu.style.opacity = "0";
+                    menu.style.transform = "scale(0.95)";
+                    setTimeout(() => {
+                        menu.style.display = "none";
+                    }, 300);
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buttons = document.querySelectorAll(".flex.w-full.items-center"); // Все кнопки
+            const sections = document.querySelectorAll("[id^='filter-section-']"); // Все секции
+    
+            buttons.forEach((button, index) => {
+                const section = sections[index]; // Получаем соответствующий блок
+                const icons = button.querySelectorAll("svg"); // Иконки +/- (разворачивания)
+    
+                if (!section) return;
+    
+                // Начальные стили (скрываем)
+                section.style.opacity = "0";
+                section.style.maxHeight = "0";
+                section.style.overflow = "hidden";
+                section.style.transition = "opacity 0.3s ease-out, max-height 0.3s ease-out";
+    
+                button.addEventListener("click", function () {
+                    if (section.style.maxHeight === "0px") {
+                        section.style.maxHeight = section.scrollHeight + "px";
+                        section.style.opacity = "1";
+    
+                        // Меняем иконки: скрываем плюс, показываем минус
+                        icons[0].style.display = "none";
+                        icons[1].style.display = "block";
+                    } else {
+                        section.style.opacity = "0";
+                        section.style.maxHeight = "0";
+    
+                        // Меняем иконки обратно
+                        icons[0].style.display = "block";
+                        icons[1].style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>
