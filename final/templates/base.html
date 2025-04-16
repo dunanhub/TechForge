@@ -32,7 +32,7 @@
                 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                     {% if user.is_authenticated %}
                         {% if user.is_superuser %}
-                            <a href="/admin/" class="text-sm/6 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Admin Panel</a>
+                            <a href="/dashboard/" class="text-sm/6 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">Admin Panel</a>
                         {% endif %}
                         <a href="/profile/" class="flex text-sm/6 px-4 py-2 font-semibold text-gray-900 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-1">
@@ -78,7 +78,7 @@
                             <div class="py-6">
                                 {% if user.is_authenticated %}
                                     {% if user.is_superuser %}
-                                        <a href="/admin/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Admin Panel</a>
+                                        <a href="/dashboard/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Admin Panel</a>
                                     {% endif %}
                                     <a href="/profile/" class="flex -mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-1">
