@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from products.models import Product, Category, ProductImage
 
 def homepage(request):
     return render(request, 'shop/index.html')
 
 def products(request):
-    return render(request, 'shop/products.html')
+    product = Product.objects.all()
+    return render(request, 'shop/products.html', {"products": product})
 
 def categories_view(request):
     categories = [
@@ -19,3 +21,8 @@ def categories_view(request):
     ]
     
     return render(request, 'shop/categories.html', {"categories": categories})
+
+def product_detail(request, id):
+    product = Product.objects.get(id=id)
+    images = ProductImage.objects.filter(product=product)
+    return render(request, 'shop/product_detail.html', {"product": product, "images": images})

@@ -1,98 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechForge - Categories</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-900">
-    <!-- Header -->
-    <header class="bg-white shadow-md py-4 px-8 flex justify-between items-center">
-        <div class="text-2xl font-bold text-blue-600">
-            <a href="/">TechForge</a>
-        </div>
-        <nav>
-            <ul class="flex space-x-6">
-                <li><a href="/" class="hover:text-blue-600">Home</a></li>
-                <li><a href="/products/" class="hover:text-blue-600">Products</a></li>
-                <li><a href="/categories/" class="hover:text-blue-600">Categories</a></li>
-                <li><a href="#contact" class="hover:text-blue-600">Contact</a></li>
-            </ul>
-        </nav>
-        <div>
-            {% if user.is_authenticated %}
-                {% if user.is_superuser %}
-                    <a href="/admin/">
-                        <button class="px-4 py-2 bg-red-600 text-white rounded-lg">Admin Panel</button>
-                    </a>
-                {% endif %}
-                <a href="/profile/">
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">{{ user.username }}</button>
-                </a>
-                <a href="/logout/">
-                    <button class="px-4 py-2 bg-gray-600 text-white rounded-lg">Log Out</button>
-                </a>
-            {% else %}
-                <a href="/login/">
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">Sign In</button>
-                </a>
-                <a href="/signup/">
-                    <button class="px-4 py-2 bg-gray-600 text-white rounded-lg">Sign Up</button>
-                </a>
-            {% endif %}
-        </div>
-    </header>
-
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-white">
+    <div>
     <!-- Categories Section -->
-    <main class="py-10 px-8">
+    <main class="py-10 px-8 mt-10">
+
         <h1 class="text-3xl font-bold text-center mb-6">Categories</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Category Items -->
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <img src="https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_1280.jpg" class="w-full h-40 object-cover rounded-lg">
                 <h3 class="font-bold text-lg mt-2">Laptops</h3>
                 <p class="text-gray-700">Find the latest high-performance laptops.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
             </div>
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <img src="https://cdn.pixabay.com/photo/2018/09/16/23/48/tech-3682674_1280.jpg" class="w-full h-40 object-cover rounded-lg">
                 <h3 class="font-bold text-lg mt-2">PC Components</h3>
                 <p class="text-gray-700">Upgrade your PC with top-quality components.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
             </div>
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqtE5xvGbHl01zsvDlsKc4n4oI4vnMmhOMjw&s" class="w-full h-40 object-cover rounded-lg">
                 <h3 class="font-bold text-lg mt-2">Prebuilt Systems</h3>
                 <p class="text-gray-700">Powerful prebuilt PCs ready to use.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
             </div>
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <img src="https://cdn.pixabay.com/photo/2018/08/09/21/45/apple-3595603_960_720.jpg" class="w-full h-40 object-cover rounded-lg">
                 <h3 class="font-bold text-lg mt-2">Accessories</h3>
                 <p class="text-gray-700">Keyboards, mice, and other peripherals.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
             </div>
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <img src="https://cdn.pixabay.com/photo/2017/09/13/17/03/technology-2746212_960_720.jpg" class="w-full h-40 object-cover rounded-lg">
                 <h3 class="font-bold text-lg mt-2">Monitors</h3>
                 <p class="text-gray-700">High-resolution monitors for work and gaming.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
             </div>
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
-                <h3 class="font-bold text-lg mt-2">Gaming Chairs</h3>
-                <p class="text-gray-700">Comfortable chairs for long gaming sessions.</p>
+                <img src="https://cdn.pixabay.com/photo/2021/09/07/07/11/game-console-6603120_1280.jpg" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Gaming Gear</h3>
+                <p class="text-gray-700">Gaming items designed for competitive play.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
             </div>
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <img src="https://cdn.pixabay.com/photo/2019/08/01/13/02/usb-flash-4377455_640.jpg" class="w-full h-40 object-cover rounded-lg">
                 <h3 class="font-bold text-lg mt-2">Storage Devices</h3>
                 <p class="text-gray-700">SSDs, HDDs, and external storage options.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
             </div>
             <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <img src="https://cdn.pixabay.com/photo/2017/09/25/11/55/cyberspace-2784907_1280.jpg" class="w-full h-40 object-cover rounded-lg">
                 <h3 class="font-bold text-lg mt-2">Networking</h3>
                 <p class="text-gray-700">Routers, modems, and networking accessories.</p>
                 <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
@@ -104,5 +63,6 @@
     <footer class="text-center py-6 bg-gray-800 text-white mt-10">
         <p>&copy; 2025 TechForge. All rights reserved.</p>
     </footer>
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}
