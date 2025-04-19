@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechForge - Categories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 px-8 flex justify-between items-center">
+        <div class="text-2xl font-bold text-blue-600">
+            <a href="/">TechForge</a>
+        </div>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="/" class="hover:text-blue-600">Home</a></li>
+                <li><a href="/products/" class="hover:text-blue-600">Products</a></li>
+                <li><a href="/categories/" class="hover:text-blue-600">Categories</a></li>
+                <li><a href="#contact" class="hover:text-blue-600">Contact</a></li>
+            </ul>
+        </nav>
+        <div>
+            {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    <a href="/admin/">
+                        <button class="px-4 py-2 bg-red-600 text-white rounded-lg">Admin Panel</button>
+                    </a>
+                {% endif %}
+                <a href="/profile/">
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">{{ user.username }}</button>
+                </a>
+                <a href="/logout/">
+                    <button class="px-4 py-2 bg-gray-600 text-white rounded-lg">Log Out</button>
+                </a>
+            {% else %}
+                <a href="/login/">
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg">Sign In</button>
+                </a>
+                <a href="/signup/">
+                    <button class="px-4 py-2 bg-gray-600 text-white rounded-lg">Sign Up</button>
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Categories Section -->
+    <main class="py-10 px-8">
+        <h1 class="text-3xl font-bold text-center mb-6">Categories</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Category Items -->
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Laptops</h3>
+                <p class="text-gray-700">Find the latest high-performance laptops.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">PC Components</h3>
+                <p class="text-gray-700">Upgrade your PC with top-quality components.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Prebuilt Systems</h3>
+                <p class="text-gray-700">Powerful prebuilt PCs ready to use.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Accessories</h3>
+                <p class="text-gray-700">Keyboards, mice, and other peripherals.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Monitors</h3>
+                <p class="text-gray-700">High-resolution monitors for work and gaming.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Gaming Chairs</h3>
+                <p class="text-gray-700">Comfortable chairs for long gaming sessions.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Storage Devices</h3>
+                <p class="text-gray-700">SSDs, HDDs, and external storage options.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+            <div class="bg-white shadow-md p-4 rounded-lg text-center">
+                <img src="https://via.placeholder.com/200" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="font-bold text-lg mt-2">Networking</h3>
+                <p class="text-gray-700">Routers, modems, and networking accessories.</p>
+                <a href="#" class="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg">View More</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 bg-gray-800 text-white mt-10">
+        <p>&copy; 2025 TechForge. All rights reserved.</p>
+    </footer>
+</body>
+</html>

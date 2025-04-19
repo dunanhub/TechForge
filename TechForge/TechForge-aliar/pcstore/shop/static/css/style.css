@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Kurale&display=swap');
+
+@import url('color.css');
+
+* {
+    transition: .3s all ease-in-out;
+}
+
+body {
+    font-family: 'Kurale', serif;
+}
+
+.font-kurale {
+    font-family: 'Kurale', serif;
+}

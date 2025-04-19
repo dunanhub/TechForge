@@ -1,0 +1,28 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<section class="py-12 bg-gray-100 font-sans">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8">Подкатегории для {{ category.name }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for subcategory in subcategories %}
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-4">
+                    {% if subcategory.image %}
+                        <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name }}" class="w-full h-auto object-cover">
+                    {% endif %}
+                    <h3 class="text-xl font-bold mt-4">{{ subcategory.name }}</h3>
+                    <p class="mt-2 text-gray-600">{{ subcategory.description }}</p>
+                    <div class="mt-4">
+                        <a href="{% url 'adminpanel:edit_subcategory' subcategory.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Edit</a>
+                        <a href="{% url 'adminpanel:delete_subcategory' subcategory.id %}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-600">Подкатегории отсутствуют.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
