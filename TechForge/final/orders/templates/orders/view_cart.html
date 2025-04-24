@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-8 px-4 mt-10">
+
+    {% if cart.items.all %}
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="divide-y divide-gray-200">
+            {% for item in cart.items.all %}
+            <div class="p-6 flex items-start sm:items-center gap-4">
+                <!-- Product Image -->
+                <div class="w-24 flex-shrink-0">
+                    <img src="{{ item.product.images.first.image.url }}"
+                         alt="{{ item.product.name }}"
+                         class="w-full h-24 object-contain">
+                </div>
+
+                <!-- Product Info -->
+                <div class="flex-1">
+                    <div class="flex justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900">
+                                {{ item.product.name }}
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">
+                                {{ item.product.category.name }}
+                            </p>
+                        </div>
+                        <p class="text-lg font-medium text-gray-900">
+                            ₸{{ item.total_price|floatformat:2 }}
+                        </p>
+                    </div>
+
+                    <!-- Quantity Controls -->
+                    <div class="mt-4 flex items-center">
+                        <div class="flex items-center border border-gray-300 rounded-md">
+                            <button onclick="updateQuantity({{ item.id }}, 'decrease')"
+                                    class="px-3 py-1 text-gray-600 hover:bg-gray-100">
+                                -
+                            </button>
+                            <span class="px-4 py-1 text-center w-12" id="quantity-{{ item.id }}">
+                                {{ item.quantity }}
+                            </span>
+                            <button onclick="updateQuantity({{ item.id }}, 'increase')"
+                                    class="px-3 py-1 text-gray-600 hover:bg-gray-100">
+                                +
+                            </button>
+                        </div>
+
+                        <button onclick="removeFromCart({{ item.id }})"
+                                class="ml-4 text-sm text-red-600 hover:text-red-800">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Order Summary -->
+        <div class="p-6 bg-gray-50 border-t border-gray-200">
+            <div class="flex justify-between text-lg font-medium text-gray-900 mb-4">
+                <p>Subtotal</p>
+                <p>₸{{ cart.total_price|floatformat:2 }}</p>
+            </div>
+            <p class="text-sm text-gray-500 mb-6">
+                Shipping and taxes calculated at checkout.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="{% url 'products' %}"
+                   class="flex-1 px-6 py-3 border border-gray-300 rounded-md text-center font-medium text-gray-700 hover:bg-gray-50">
+                    Continue Shopping
+                </a>
+
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- Empty Cart -->
+    <div class="text-center py-12 pb-82">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <h3 class="mt-4 text-lg font-medium text-gray-900">Your cart is empty</h3>
+        <p class="mt-2 text-gray-500">Start adding some products to your cart</p>
+        <div class="mt-6">
+            <a href="{% url 'products' %}"
+               class="px-6 py-3 bg-indigo-600 rounded-md text-white font-medium hover:bg-indigo-700">
+                Browse Products
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// Remove item from cart
+function removeFromCart(itemId) {
+    fetch(`/orders/remove-from-cart/${itemId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred');
+    });
+}
+
+// Update item quantity
+function updateQuantity(itemId, action) {
+    fetch(`/orders/update-quantity/${itemId}/${action}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById(`quantity-${itemId}`).textContent = data.new_quantity;
+            location.reload();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred');
+    });
+}
+</script>
+{% endblock %}

@@ -24,61 +24,16 @@
     <h2 class="text-4xl font-bold">Product Categories</h2>
     <p class="text-gray-600 mt-2">Learn how to grow your business with our expert advice.</p>
 </div>
-
-<div class="max-w-6xl mx-auto mt-8 grid md:grid-cols-3 gap-6 content-between content-between">
-    <a href="#" class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <img src="https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_1280.jpg" class="w-full h-56 object-cover">
-        <div class="p-6 content-between content-between">
-            <h3 class="text-xl font-semibold mt-2">Powerful Computers and Laptops for Work and Gaming</h3>
-            <p class="text-gray-600 mt-2 text-sm">Wide selection of desktops, gaming PCs, and laptops for any task. High performance and reliability.</p>
-            <p class="text-gray-500 text-sm mt-6">Categories: <span class="bg-blue-100 text-blue-600 px-2 py-1 text-xs rounded-lg ml-2">Computers and laptops</span></p>
+<div class="max-w-6xl mx-auto mt-8 grid md:grid-cols-3 gap-6">
+    {% for category in categories %}
+    <a href="/products/" class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col h-full">
+        <img src="{{ category.image }}" class="w-full h-56 object-cover">
+        <div class="p-6 flex-grow">
+            <h3 class="text-xl font-semibold mt-2">{{ category.name }}</h3>
+            <p class="text-gray-600 mt-2 text-sm">{{ category.description }}</p>
         </div>
     </a>
-
-    <a href="#" class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <img src="https://cdn.pixabay.com/photo/2018/08/09/21/45/apple-3595603_960_720.jpg" class="w-full h-56 object-cover">
-        <div class="p-6 content-between">
-            <h3 class="text-xl font-semibold mt-2">Essential Accessories for Your Devices</h3>
-            <p class="text-gray-600 mt-2 text-sm">Chargers, adapters, cables, and cooling solutions to keep your tech running smoothly.</p>
-            <p class="text-gray-500 text-sm mt-6">Categories: <span class="bg-green-100 text-green-600 px-2 py-1 text-xs rounded-lg ml-2">Accessories</span></p>
-        </div>
-    </a>
-
-    <a href="#" class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <img src="https://cdn.pixabay.com/photo/2021/09/07/07/11/game-console-6603120_1280.jpg" class="w-full h-56 object-cover">
-        <div class="p-6 content-between">
-            <h3 class="text-xl font-semibold mt-2">Pro-Level Gaming Gear for Maximum Performance</h3>
-            <p class="text-gray-600 mt-2 text-sm">Gaming keyboards, mice, headsets, and controllers designed for competitive play.</p>
-            <p class="text-gray-500 text-sm mt-6">Categories: <span class="bg-purple-100 text-purple-600 px-2 py-1 text-xs rounded-lg ml-2">Gaming peripherals</span></p>
-        </div>
-    </a>
-
-    <a href="#" class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <img src="https://cdn.pixabay.com/photo/2017/09/13/17/03/technology-2746212_960_720.jpg" class="w-full h-56 object-cover">
-        <div class="p-6 content-between">
-            <h3 class="text-xl font-semibold mt-2">Enhance Your Setup with Top-Quality Peripherals</h3>
-            <p class="text-gray-600 mt-2 text-sm">Monitors, printers, webcams, and audio devices for work and entertainment.</p>
-            <p class="text-gray-500 text-sm mt-6">Categories: <span class="bg-red-100 text-red-600 px-2 py-1 text-xs rounded-lg ml-2">Peripheral devices</span></p>
-        </div>
-    </a>
-
-    <a href="#" class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <img src="https://cdn.pixabay.com/photo/2018/09/16/23/48/tech-3682674_1280.jpg" class="w-full h-56 object-cover">
-        <div class="p-6 content-between">
-            <h3 class="text-xl font-semibold mt-2">Reliable Accessories and Consumables for Your Devices</h3>
-            <p class="text-gray-600 mt-2 text-sm">Batteries, storage devices, thermal paste, and other essentials to keep your tech in top shape.</p>
-            <p class="text-gray-500 text-sm mt-6">Categories: <span class="bg-yellow-100 text-yellow-600 px-2 py-1 text-xs rounded-lg ml-2">Accessories and supplies</span></p>
-        </div>
-    </a>
-
-    <a href="#" class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <img src="https://cdn.pixabay.com/photo/2017/09/25/11/55/cyberspace-2784907_1280.jpg" class="w-full h-56 object-cover">
-        <div class="p-6 content-between">
-            <h3 class="text-xl font-semibold mt-2">Professional IT Solutions for Your Business</h3>
-            <p class="text-gray-600 mt-2 text-sm">Servers, networking equipment, and office hardware to optimize your workflow.</p>
-            <p class="text-gray-500 text-sm mt-6">Categories: <span class="bg-slate-100 text-slate-600 px-2 py-1 text-xs rounded-lg ml-2">Equipment for business</span></p>
-        </div>
-    </a>
+    {% endfor %}
 </div>
 
 <div class="isolate px-6 py-24 sm:py-32 lg:px-8">
@@ -87,9 +42,9 @@
     </div>
     <div class="mx-auto max-w-2xl text-center">
         <h2 class="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">Contact Us</h2>
-        <p class="mt-2 text-lg/8 text-gray-600">Aute magna irure deserunt veniam aliqua magna enim voluptate.</p>
     </div>
-    <form action="#" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-20">
+    <form action="#" method="POST" class="mx-auto mt-16 max-w-xl sm:mt-10">
+        {% csrf_token %}
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
         <div>
             <label for="first-name" class="block text-sm/6 font-semibold text-gray-900">First name</label>

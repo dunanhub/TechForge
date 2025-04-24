@@ -9,6 +9,7 @@ urlpatterns = [
     path('auth/', include('auth_app.urls')),
     path('', include("shop.urls")),
     path('accounts/', include('allauth.urls')),
+    path('orders/', include('orders.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
