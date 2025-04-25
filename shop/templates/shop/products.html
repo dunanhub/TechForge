@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white">
+    <div>
+      <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-24">
+          <div class="flex items-center justify-between border-b border-gray-200 pb-6 pt-4">
+            <h1 class="text-sm font-bold tracking-tight text-gray-500"><a href="/">Home</a> / Products</h1>
+            <div class="relative inline-block text-left">
+              <div>
+                <button type="button" class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="sort-menu" aria-expanded="false" aria-haspopup="true">
+                  Sort
+                  <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="sort-options">
+                <div class="py-1">
+                  <a href="?sort=price_asc" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100">Price: Low to High</a>
+                  <a href="?sort=price_desc" class="block px-4 py-2 text-sm text-gray-500 hover:bg-gray-100">Price: High to Low</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+         <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+              <form id="filter-form" method="GET" action="/products/" class="hidden lg:block">
+                  <h1 class="text-4xl font-bold tracking-tight text-gray-900 pb-4">New Arrivals</h1>
+
+                  <!-- Категории -->
+                  <div class="border-b border-t border-gray-200 py-2">
+                      <h3 class="flow-root">
+                          <button type="button" class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-category" aria-expanded="true">
+                              <span class="font-medium text-gray-900">Category</span>
+                              <span class="ml-6 flex items-center">
+                                  <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style="display: none;">
+                                      <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                                  </svg>
+                                  <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style="display: block;">
+                                      <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
+                                  </svg>
+                              </span>
+                          </button>
+                      </h3>
+                      <div id="filter-section-category" class="space-y-4 pt-4">
+                          {% for category in categories %}
+                          <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                  <div class="group grid size-4 grid-cols-1">
+                                      <input id="filter-category-{{ category.id }}"
+                                             name="category[]"
+                                             value="{{ category.id }}"
+                                             type="checkbox"
+                                             class="category-filter col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                             {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %}>
+                                      <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white" viewBox="0 0 14 14" fill="none">
+                                          <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                      </svg>
+                                  </div>
+                              </div>
+                              <label for="filter-category-{{ category.id }}" class="text-sm text-gray-600">{{ category.name }}</label>
+                          </div>
+                          {% endfor %}
+                      </div>
+                  </div>
+
+                  <!-- Цена -->
+                  <div class="border-b border-gray-200 py-2">
+                      <h3 class="flow-root">
+                          <button type="button" class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-price" aria-expanded="false">
+                              <span class="font-medium text-gray-900">Price</span>
+                              <span class="ml-6 flex items-center">
+                                  <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style="display: block;">
+                                      <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                                  </svg>
+                                  <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" style="display: none;">
+                                      <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
+                                  </svg>
+                              </span>
+                          </button>
+                      </h3>
+                      <div id="filter-section-price" class="hidden space-y-4 pt-4">
+                          <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                  <div class="group grid size-4 grid-cols-1">
+                                      <input id="filter-price-1" name="price[]" value="0-100000" type="checkbox" class="price-filter col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                             {% if "0-100000" in selected_prices %}checked{% endif %}>
+                                      <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white" viewBox="0 0 14 14" fill="none">
+                                          <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                      </svg>
+                                  </div>
+                              </div>
+                              <label for="filter-price-1" class="text-sm text-gray-600">Under 100,000 ₸</label>
+                          </div>
+                          <div class="flex gap-3">
+                              <div class="flex h-5 shrink-0 items-center">
+                                  <div class="group grid size-4 grid-cols-1">
+                                      <input id="filter-price-2" name="price[]" value="100000-300000" type="checkbox" class="price-filter col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                             {% if "100000-300000" in selected_prices %}checked{% endif %}>
+                                      <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white" viewBox="0 0 14 14" fill="none">
+                                          <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                      </svg>
+                                  </div>
+                              </div>
+                              <label for="filter-price-2" class="text-sm text-gray-600">100,000 - 300,000 ₸</label>
+                          </div>
+                          <div class="flex gap-3">
+                                <div class="flex h-5 shrink-0 items-center">
+                                    <div class="group grid size-4 grid-cols-1">
+                                        <input id="filter-price-3" name="price[]" value="300000-500000" type="checkbox" class="price-filter col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                               {% if "300000-500000" in selected_prices %}checked{% endif %}>
+                                        <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white" viewBox="0 0 14 14" fill="none">
+                                            <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <label for="filter-price-3" class="text-sm text-gray-600">300,000 - 500,000 ₸</label>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="flex h-5 shrink-0 items-center">
+                                    <div class="group grid size-4 grid-cols-1">
+                                        <input id="filter-price-4" name="price[]" value="500000-800000" type="checkbox" class="price-filter col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                               {% if "500000-800000" in selected_prices %}checked{% endif %}>
+                                        <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white" viewBox="0 0 14 14" fill="none">
+                                            <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <label for="filter-price-4" class="text-sm text-gray-600">500,000 - 800,000 ₸</label>
+                            </div>
+                      </div>
+                  </div>
+
+                  <div class="mt-6 flex space-x-4">
+                      <a href="/products/" class="flex-1 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-md border border-gray-300 text-center">
+                          Reset
+                      </a>
+                  </div>
+              </form>
+
+
+            <div class="lg:col-span-3">
+              <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8" id="products-container">
+                  {% for product in products %}
+                    <div class="group relative product-item"
+                         data-category="{{ product.category.id }}"
+                         data-price="{{ product.price }}">
+                      <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}"
+                           class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80">
+                      <div class="mt-4 flex justify-between">
+                        <div>
+                          <h3 class="text-sm text-gray-700">
+                            <a href="{% url 'product_detail' product.id %}">
+                              <span aria-hidden="true" class="absolute inset-0"></span>
+                              {{ product.name }}
+                            </a>
+                          </h3>
+                          <span class="bg-yellow-100 text-yellow-600 px-2 py-1 text-xs rounded-lg">{{product.category.name}}</span>
+
+                          <p class="mt-1 text-sm text-gray-500">{{ product.description}}</p>
+                        </div>
+
+                        <p class="text-sm font-medium text-gray-900">₸{{ product.price }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+            </div>
+          </div>
+        <div class="mt-10 flex items-center justify-center border-t border-gray-200 px-4 py-6 sm:px-6">
+            <div class="flex flex-1 justify-between sm:hidden">
+                {% if products.has_previous %}
+                    <a href="?page={{ products.previous_page_number }}{% if current_params %}&{{ current_params }}{% endif %}"
+                       class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        Previous
+                    </a>
+                {% endif %}
+                {% if products.has_next %}
+                    <a href="?page={{ products.next_page_number }}{% if current_params %}&{{ current_params }}{% endif %}"
+                       class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        Next
+                    </a>
+                {% endif %}
+            </div>
+            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-700">
+                        Showing <span class="font-medium">{{ products.start_index }}</span> to <span class="font-medium">{{ products.end_index }}</span> of <span class="font-medium">{{ products.paginator.count }}</span> results
+                    </p>
+                </div>
+                <div>
+                    <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                        {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}{% if current_params %}&{{ current_params }}{% endif %}"
+                               class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                <span class="sr-only">Previous</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        {% endif %}
+
+                        {% for num in products.paginator.page_range %}
+                            {% if products.number == num %}
+                                <a href="#" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    {{ num }}
+                                </a>
+                            {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                                <a href="?page={{ num }}{% if current_params %}&{{ current_params }}{% endif %}"
+                                   class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                    {{ num }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}{% if current_params %}&{{ current_params }}{% endif %}"
+                               class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                                <span class="sr-only">Next</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l4.5 4.25a.75.75 0 11-1.04 1.08z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+      </main>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterSections = document.querySelectorAll('[aria-controls^="filter-section"]');
+
+  function toggleIcons(button, isExpanded) {
+    const icons = button.querySelectorAll('svg');
+    icons[0].style.display = isExpanded ? 'none' : 'block';
+    icons[1].style.display = isExpanded ? 'block' : 'none';
+  }
+
+  filterSections.forEach(button => {
+    const sectionId = button.getAttribute('aria-controls');
+    const section = document.getElementById(sectionId);
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+    section.classList.toggle('hidden', !isExpanded);
+    toggleIcons(button, isExpanded);
+
+    button.addEventListener('click', () => {
+      const newState = button.getAttribute('aria-expanded') !== 'true';
+      button.setAttribute('aria-expanded', newState);
+      section.classList.toggle('hidden');
+      toggleIcons(button, newState);
+    });
+  });
+
+  const sortMenu = document.getElementById('sort-menu');
+  const sortOptions = document.getElementById('sort-options');
+
+  if (sortMenu && sortOptions) {
+    sortMenu.addEventListener('click', () => {
+      sortOptions.classList.toggle('hidden');
+    });
+  }
+
+  const productsContainer = document.getElementById('products-container');
+  const productItems = document.querySelectorAll('.product-item');
+  const categoryFilters = document.querySelectorAll('.category-filter');
+  const priceFilters = document.querySelectorAll('.price-filter');
+  const applyBtn = document.querySelector('#filter-form button[type="submit"]');
+  const resetBtn = document.querySelector('#filter-form a[href="/products/"]');
+
+  function filterProducts() {
+    const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked')).map(cb => cb.value);
+    const selectedPriceRanges = Array.from(document.querySelectorAll('.price-filter:checked')).map(cb => cb.value);
+
+    productItems.forEach(item => {
+      const categoryMatch = selectedCategories.length === 0 ||
+                          selectedCategories.includes(item.dataset.category);
+
+      let priceMatch = selectedPriceRanges.length === 0;
+      if (!priceMatch) {
+        const price = parseFloat(item.dataset.price);
+        for (const range of selectedPriceRanges) {
+          const [min, max] = range.split('-').map(Number);
+          if (price >= min && price <= max) {
+            priceMatch = true;
+            break;
+          }
+        }
+      }
+
+      if (categoryMatch && priceMatch) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      categoryFilters.forEach(cb => cb.checked = false);
+      priceFilters.forEach(cb => cb.checked = false);
+
+      productItems.forEach(item => item.style.display = 'block');
+
+      window.history.pushState({}, '', window.location.pathname);
+    });
+  }
+
+  categoryFilters.forEach(filter => {
+    filter.addEventListener('change', filterProducts);
+  });
+
+  priceFilters.forEach(filter => {
+    filter.addEventListener('change', filterProducts);
+  });
+
+  function initFiltersFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const urlCategories = urlParams.getAll('category[]');
+    if (urlCategories.length > 0) {
+      categoryFilters.forEach(cb => {
+        cb.checked = urlCategories.includes(cb.value);
+      });
+    }
+
+    const urlPrices = urlParams.getAll('price[]');
+    if (urlPrices.length > 0) {
+      priceFilters.forEach(cb => {
+        cb.checked = urlPrices.includes(cb.value);
+      });
+    }
+
+    if (urlCategories.length > 0 || urlPrices.length > 0) {
+      filterProducts();
+    }
+  }
+
+  initFiltersFromUrl();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterForm = document.getElementById('filter-form');
+    if (filterForm) {
+        filterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Получаем текущие параметры из URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentPage = urlParams.get('page');
+
+            // Если есть текущая страница, добавляем её в форму
+            if (currentPage) {
+                const pageInput = document.createElement('input');
+                pageInput.type = 'hidden';
+                pageInput.name = 'page';
+                pageInput.value = currentPage;
+                filterForm.appendChild(pageInput);
+            }
+
+            // Отправляем форму
+            filterForm.submit();
+        });
+    }
+});
+</script>
+{% endblock %}
